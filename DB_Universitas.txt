@@ -1,0 +1,135 @@
+Setting environment for using XAMPP for Windows.
+Kerti@IDEAPAD c:\xampp
+# mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 26
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database db_universitas;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> use db_universitas
+Database changed
+MariaDB [db_universitas]> create table mahasiswa (
+    -> id int primary key auto_increment,
+    -> nama_mahasiswa varchar(20),
+    -> tempat_lahir varchar(50),
+    -> alamat text,
+    -> jurusan varchar(50),
+    -> tahun_masuk varchar(5));
+Query OK, 0 rows affected (0.018 sec)
+
+MariaDB [db_universitas]> insert into mahasiswa
+    -> (nama_mahasiswa, tempat_lahir, alamat, jurusan, tahun_masuk) values
+    -> ('baba','bogor','puri','kedokteran gigi','2026'),
+    -> ('bibi','cibubur','nirwana','kedokteran gigi','2026'),
+    -> ('bubu','cianjur','acropolis','Ilkom','2026'),
+    -> ('bebe','bandung','peru','Ilkom','2026'),
+    -> ('bobo','surabaya','griya','Sastra Inggris','2026');
+Query OK, 5 rows affected (0.017 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [db_universitas]> select * from mahasiswa;
++----+----------------+--------------+-----------+-----------------+-------------+
+| id | nama_mahasiswa | tempat_lahir | alamat    | jurusan         | tahun_masuk |
++----+----------------+--------------+-----------+-----------------+-------------+
+|  1 | baba           | bogor        | puri      | kedokteran gigi | 2026        |
+|  2 | bibi           | cibubur      | nirwana   | kedokteran gigi | 2026        |
+|  3 | bubu           | cianjur      | acropolis | Ilkom           | 2026        |
+|  4 | bebe           | bandung      | peru      | Ilkom           | 2026        |
+|  5 | bobo           | surabaya     | griya     | Sastra Inggris  | 2026        |
++----+----------------+--------------+-----------+-----------------+-------------+
+5 rows in set (0.001 sec)
+
+MariaDB [db_universitas]> update mahasiswa
+    -> set
+    -> tempat_lahir = 'solo',
+    -> alamat = 'solo'
+    -> where id = 4;
+Query OK, 1 row affected (0.042 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db_universitas]> select * from mahasiswa;
++----+----------------+--------------+-----------+-----------------+-------------+
+| id | nama_mahasiswa | tempat_lahir | alamat    | jurusan         | tahun_masuk |
++----+----------------+--------------+-----------+-----------------+-------------+
+|  1 | baba           | bogor        | puri      | kedokteran gigi | 2026        |
+|  2 | bibi           | cibubur      | nirwana   | kedokteran gigi | 2026        |
+|  3 | bubu           | cianjur      | acropolis | Ilkom           | 2026        |
+|  4 | bebe           | solo         | solo      | Ilkom           | 2026        |
+|  5 | bobo           | surabaya     | griya     | Sastra Inggris  | 2026        |
++----+----------------+--------------+-----------+-----------------+-------------+
+5 rows in set (0.000 sec)
+
+MariaDB [db_universitas]> delete from mahasiswa where id = 5;
+Query OK, 1 row affected (0.041 sec)
+
+MariaDB [db_universitas]> select * from mahasiswa;
++----+----------------+--------------+-----------+-----------------+-------------+
+| id | nama_mahasiswa | tempat_lahir | alamat    | jurusan         | tahun_masuk |
++----+----------------+--------------+-----------+-----------------+-------------+
+|  1 | baba           | bogor        | puri      | kedokteran gigi | 2026        |
+|  2 | bibi           | cibubur      | nirwana   | kedokteran gigi | 2026        |
+|  3 | bubu           | cianjur      | acropolis | Ilkom           | 2026        |
+|  4 | bebe           | solo         | solo      | Ilkom           | 2026        |
++----+----------------+--------------+-----------+-----------------+-------------+
+4 rows in set (0.000 sec)
+
+MariaDB [db_universitas]> select nama_mahasiswa , jurusan from mahasiswa;
++----------------+-----------------+
+| nama_mahasiswa | jurusan         |
++----------------+-----------------+
+| baba           | kedokteran gigi |
+| bibi           | kedokteran gigi |
+| bubu           | Ilkom           |
+| bebe           | Ilkom           |
++----------------+-----------------+
+4 rows in set (0.001 sec)
+
+MariaDB [db_universitas]> select distinct tempat_lahir from mahasiswa;
++--------------+
+| tempat_lahir |
++--------------+
+| bogor        |
+| cibubur      |
+| cianjur      |
+| solo         |
++--------------+
+4 rows in set (0.001 sec)
+
+MariaDB [db_universitas]> select nama_mahasiswa, alamat, jurusan from mahasiswa order by alamat desc;
++----------------+-----------+-----------------+
+| nama_mahasiswa | alamat    | jurusan         |
++----------------+-----------+-----------------+
+| bebe           | solo      | Ilkom           |
+| baba           | puri      | kedokteran gigi |
+| bibi           | nirwana   | kedokteran gigi |
+| bubu           | acropolis | Ilkom           |
++----------------+-----------+-----------------+
+4 rows in set (0.001 sec)
+
+MariaDB [db_universitas]> select * from mahasiswa order by nama_mahasiswa desc, alamat asc;
++----+----------------+--------------+-----------+-----------------+-------------+
+| id | nama_mahasiswa | tempat_lahir | alamat    | jurusan         | tahun_masuk |
++----+----------------+--------------+-----------+-----------------+-------------+
+|  3 | bubu           | cianjur      | acropolis | Ilkom           | 2026        |
+|  2 | bibi           | cibubur      | nirwana   | kedokteran gigi | 2026        |
+|  4 | bebe           | solo         | solo      | Ilkom           | 2026        |
+|  1 | baba           | bogor        | puri      | kedokteran gigi | 2026        |
++----+----------------+--------------+-----------+-----------------+-------------+
+4 rows in set (0.001 sec)
+
+MariaDB [db_universitas]> select * from mahasiswa where jurusan = 'Ilkom' order by nama_mahasiswa desc;
++----+----------------+--------------+-----------+---------+-------------+
+| id | nama_mahasiswa | tempat_lahir | alamat    | jurusan | tahun_masuk |
++----+----------------+--------------+-----------+---------+-------------+
+|  3 | bubu           | cianjur      | acropolis | Ilkom   | 2026        |
+|  4 | bebe           | solo         | solo      | Ilkom   | 2026        |
++----+----------------+--------------+-----------+---------+-------------+
+2 rows in set (0.001 sec)
+
+MariaDB [db_universitas]>
